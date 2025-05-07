@@ -2,12 +2,9 @@
 
 This application implements a hierarchical role-based permission management system that allows groups of users to access information based on their roles within the organisation. This system is designed with security and privacy by design while fostering collaboration across different levels of the organisational structure.
 It demonstrates a strong understanding of:
-
-# Hierarchical data representation
-
-# Role-based access control (RBAC)
-
-# Scalable and performant architecture
+- Hierarchical data representation
+- Role-based access control (RBAC)
+- Scalable and performant architecture
 
 ## Requirements
 Docker Desktop installed and running
