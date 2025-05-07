@@ -1,0 +1,16 @@
+version: '3'
+services:
+  db:
+    image: postgres:13
+    container_name: role_based_permissions_db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: permissions_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
