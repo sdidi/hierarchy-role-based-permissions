@@ -17,20 +17,31 @@ export class RolesService {
   async createRole(roleDto: CreateRoleDto): Promise<Role> {
     const role = new Role();
     role.name = roleDto.name;
-    role.structureId = roleDto.structureId
+    role.structureId = roleDto.structureId;
+  
     if (roleDto.parentRoleId) {
       const parentRole = await this.rolesRepository.findOne({
         where: { id: roleDto.parentRoleId },
         relations: ['permissions'],
       });
   
-      if (parentRole) {
-        role.parentRole = parentRole;
-        role.permissions = [...(parentRole.permissions ?? [])];
+      if (!parentRole) {
+        throw new Error(`Parent role with ID ${roleDto.parentRoleId} not found.`);
       }
+  
+      if (parentRole.structureId >= role.structureId) {
+        throw new Error(
+          `Parent role must have a structureId smaller than the new role. Parent: ${parentRole.structureId}, New: ${role.structureId}`
+        );
+      }
+  
+      role.parentRole = parentRole;
+      role.permissions = [...(parentRole.permissions ?? [])];
     }
+  
     return this.rolesRepository.save(role);
   }
+  
 
   async getAllRoles(): Promise<Role[]> {
     return this.rolesRepository.find({ relations: ['permissions'] }); // Fetch roles with permissions
