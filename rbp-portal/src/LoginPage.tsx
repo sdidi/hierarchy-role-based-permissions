@@ -19,13 +19,23 @@ const LoginPage: React.FC = () => {
         password,
       });
 
-      const token = response.data.access_token;
-      sessionStorage.setItem('token', token);
-      navigate('/dashboard');
-    } catch (error) {
-      setErrorMsg('Login failed. Please check your credentials.');
+      const token = response.data?.access_token;
+
+      if (token) {
+        sessionStorage.setItem('token', token);
+        navigate('/dashboard');
+      } else {
+        setErrorMsg('Login failed. Invalid credentials');
+      }
+    } catch (error: any) {
+      if (error.response?.status === 401) {
+        setErrorMsg('Incorrect username or password.');
+      } else {
+        setErrorMsg('Login failed. Please try again later.');
+      }
     }
   };
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-blue-100 to-purple-200 px-4">
