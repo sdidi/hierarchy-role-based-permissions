@@ -41,40 +41,42 @@ const ListUsers: React.FC = () => {
       });
   }, []);
 
-  if (error) return <div className="text-red-500">{error}</div>;
+  if (error) return <div className="text-red-500 text-center">{error}</div>;
 
   return (
-    <div className="p-4">
-      <h2 className="text-xl font-bold mb-4">User List</h2>
-      
-      <table className="min-w-full table-auto">
-        <thead>
-          <tr className="bg-gray-200">
-            <th className="px-4 py-2 border">ID</th>
-            <th className="px-4 py-2 border">Name</th>
-            <th className="px-4 py-2 border">Structure ID</th>
-            <th className="px-4 py-2 border">Roles</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user) => (
-            <tr key={user.id} className="border-b">
-              <td className="px-4 py-2 text-center">{user.id}</td>
-              <td className="px-4 py-2">{user.name}</td>
-              <td className="px-4 py-2 text-center">{user.structureId}</td>
-              <td className="px-4 py-2">
-                <ul className="list-disc pl-5">
-                  {user.roles.map((role) => (
-                    <li key={role.id}>
-                      {role.name} (Structure ID: {role.structureId})
-                    </li>
-                  ))}
-                </ul>
-              </td>
+    <div className="max-w-7xl mx-auto p-6 bg-white rounded-lg shadow-md">
+      <h2 className="text-2xl font-semibold text-gray-800 mb-6">User List</h2>
+
+      <div className="overflow-x-auto">
+        <table className="min-w-full table-auto border-collapse text-sm">
+          <thead className="bg-gray-100">
+            <tr className="text-left">
+              <th className="px-6 py-3 font-medium text-gray-700 border-b">ID</th>
+              <th className="px-6 py-3 font-medium text-gray-700 border-b">Name</th>
+              <th className="px-6 py-3 font-medium text-gray-700 border-b">Structure ID</th>
+              <th className="px-6 py-3 font-medium text-gray-700 border-b">Roles</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {users.map((user) => (
+              <tr key={user.id} className="hover:bg-gray-50">
+                <td className="px-6 py-3 text-center border-b">{user.id}</td>
+                <td className="px-6 py-3 border-b">{user.name}</td>
+                <td className="px-6 py-3 text-center border-b">{user.structureId}</td>
+                <td className="px-6 py-3 border-b">
+                  <ul className="list-disc pl-6 space-y-1">
+                    {user.roles.map((role) => (
+                      <li key={role.id} className="text-gray-700">
+                        {role.name} (Structure ID: {role.structureId})
+                      </li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

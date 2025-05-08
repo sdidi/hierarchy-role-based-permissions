@@ -1,6 +1,7 @@
 import React, { useState, FormEvent } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './index.css';
 
 const LoginPage: React.FC = () => {
   const [username, setUsername] = useState('');
@@ -22,14 +23,15 @@ const LoginPage: React.FC = () => {
       sessionStorage.setItem('token', token);
       navigate('/dashboard');
     } catch (error) {
-      setErrorMsg("Login failed. Please check your credentials.");
+      setErrorMsg('Login failed. Please check your credentials.');
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 to-purple-200 px-4">
-      <div className="w-full max-w-md bg-white shadow-xl rounded-lg p-8">
-        <h2 className="text-red-500 text-4xl">Welcome Back</h2>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-tr from-blue-100 to-purple-200 px-4">
+      <div className="w-full max-w-md bg-white shadow-xl rounded-xl p-8 border-2 border-blue-500">
+        <h2 className="text-3xl font-bold text-center text-blue-700 mb-6">Welcome Back</h2>
+
         <form onSubmit={handleLogin} className="space-y-5">
           <div>
             <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1">
@@ -44,6 +46,7 @@ const LoginPage: React.FC = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none transition"
             />
           </div>
+
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
               Password
@@ -57,12 +60,14 @@ const LoginPage: React.FC = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none transition"
             />
           </div>
+
           <button
             type="submit"
             className="w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition font-semibold"
           >
             Login
           </button>
+
           {errorMsg && (
             <p className="text-red-500 text-center text-sm mt-2">{errorMsg}</p>
           )}

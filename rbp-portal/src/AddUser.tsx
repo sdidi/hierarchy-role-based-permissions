@@ -48,7 +48,7 @@ const CreateUser: React.FC = () => {
       name,
       password,
       structureId,
-      roles: [selectedRoleId], 
+      roles: [selectedRoleId],
     };
 
     try {
@@ -62,29 +62,62 @@ const CreateUser: React.FC = () => {
   };
 
   return (
-    <div className="create-user">
-      <h2>Create User</h2>
+    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md mt-8">
+      <h2 className="text-2xl font-semibold text-gray-700 mb-6">Create User</h2>
+      
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name:</label>
-          <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-        </div>
-        <div>
-          <label>Structure ID:</label>
+       
+        <div className="mb-4">
+          <label htmlFor="name" className="block text-sm font-medium text-gray-600">Name:</label>
           <input
-            type="number"
+            type="text"
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+
+      
+        <div className="mb-4">
+          <label htmlFor="password" className="block text-sm font-medium text-gray-600">Password:</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          />
+        </div>
+
+      
+        <div className="mb-4">
+          <label htmlFor="structureId" className="block text-sm font-medium text-gray-600">Structure ID:</label>
+          <select
+            id="structureId"
             value={structureId}
             onChange={(e) => setStructureId(Number(e.target.value))}
             required
-          />
+            className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          >
+            <option value={1}>1</option>
+            <option value={2}>2</option>
+            <option value={3}>3</option>
+          </select>
         </div>
-        <div>
-          <label>Select Role:</label>
-          <select value={selectedRoleId ?? ''} onChange={(e) => setSelectedRoleId(Number(e.target.value))} required>
+
+      
+        <div className="mb-4">
+          <label htmlFor="role" className="block text-sm font-medium text-gray-600">Select Role:</label>
+          <select
+            id="role"
+            value={selectedRoleId ?? ''}
+            onChange={(e) => setSelectedRoleId(Number(e.target.value))}
+            required
+            className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          >
             <option value="" disabled>Select a role</option>
             {availableRoles.map((role) => (
               <option key={role.id} value={role.id}>
@@ -93,20 +126,31 @@ const CreateUser: React.FC = () => {
             ))}
           </select>
         </div>
-        <button type="submit">Create User</button>
+
+      
+        <div className="mb-4">
+          <button
+            type="submit"
+            className="w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+          >
+            Create User
+          </button>
+        </div>
       </form>
 
+   
       {user && (
-        <div>
-          <h3>Created User:</h3>
-          <p>ID: {user.id}</p>
-          <p>Name: {user.name}</p>
-          <p>Password: {user.password}</p>
-          <p>Structure ID: {user.structureId}</p>
+        <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-md">
+          <h3 className="text-lg font-semibold text-green-700">Created User:</h3>
+          <p><strong>ID:</strong> {user.id}</p>
+          <p><strong>Name:</strong> {user.name}</p>
+          <p><strong>Password:</strong> {user.password}</p>
+          <p><strong>Structure ID:</strong> {user.structureId}</p>
         </div>
       )}
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+    
+      {error && <p className="mt-4 text-red-500">{error}</p>}
     </div>
   );
 };

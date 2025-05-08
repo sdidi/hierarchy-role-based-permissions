@@ -30,7 +30,6 @@ const CreateRole: React.FC = () => {
   const [responseData, setResponseData] = useState<RoleResponse | null>(null);
   const [error, setError] = useState<string>('');
 
-  
   useEffect(() => {
     const fetchRoles = async () => {
       try {
@@ -45,7 +44,6 @@ const CreateRole: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-     console.log('Role to be created'+parentRoleId);
     const payload: CreateRoleRequest = {
       name,
       structureId,
@@ -63,25 +61,32 @@ const CreateRole: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1>Create a New Role</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md mt-8">
+      <h1 className="text-2xl font-semibold text-gray-700 mb-6">Create a New Role</h1>
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Name Input */}
         <div>
-          <label>Name</label>
+          <label htmlFor="name" className="block text-sm font-medium text-gray-600">Role Name:</label>
           <input
             type="text"
+            id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
+            className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
 
+        {/* Structure ID Select */}
         <div>
-          <label>Structure ID</label>
+          <label htmlFor="structureId" className="block text-sm font-medium text-gray-600">Structure ID:</label>
           <select
+            id="structureId"
             value={structureId}
             onChange={(e) => setStructureId(Number(e.target.value))}
             required
+            className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           >
             <option value={1}>1</option>
             <option value={2}>2</option>
@@ -89,12 +94,15 @@ const CreateRole: React.FC = () => {
           </select>
         </div>
 
+        {/* Parent Role Select */}
         <div>
-          <label>Parent Role</label>
+          <label htmlFor="parentRoleId" className="block text-sm font-medium text-gray-600">Parent Role:</label>
           <select
+            id="parentRoleId"
             value={parentRoleId}
             onChange={(e) => setParentRoleId(Number(e.target.value))}
             required
+            className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
           >
             <option value="" disabled>Select a parent role</option>
             {parentRoles.map((role) => (
@@ -105,25 +113,35 @@ const CreateRole: React.FC = () => {
           </select>
         </div>
 
-        <button type="submit">Create Role</button>
+        {/* Submit Button */}
+        <div>
+          <button
+            type="submit"
+            className="w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+          >
+            Create Role
+          </button>
+        </div>
       </form>
 
-      {error && <p className="text-red-500">{error}</p>}
+      {/* Error Message */}
+      {error && <p className="mt-4 text-red-500">{error}</p>}
 
+      {/* Response Data */}
       {responseData && (
-        <div>
-          <h2>Role Created Successfully:</h2>
+        <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-md">
+          <h3 className="text-lg font-semibold text-green-700">Role Created Successfully:</h3>
           <p><strong>Role ID:</strong> {responseData.id}</p>
           <p><strong>Role Name:</strong> {responseData.name}</p>
           <p><strong>Structure ID:</strong> {responseData.structureId}</p>
           {responseData.parentRole ? (
-      <>
-        <p><strong>Parent Role Name:</strong> {responseData.parentRole.name}</p>
-        <p><strong>Parent Role Structure ID:</strong> {responseData.parentRole.structureId}</p>
-      </>
-    ) : (
-      <p>No parent role information available.</p>
-    )}
+            <>
+              <p><strong>Parent Role Name:</strong> {responseData.parentRole.name}</p>
+              <p><strong>Parent Role Structure ID:</strong> {responseData.parentRole.structureId}</p>
+            </>
+          ) : (
+            <p>No parent role information available.</p>
+          )}
         </div>
       )}
     </div>
